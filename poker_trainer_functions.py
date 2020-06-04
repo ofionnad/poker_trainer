@@ -17,8 +17,8 @@ def fold_or_raise():
         Decision to fold ('f') or raise ('r').
     '''
     action = input('Do you want to fold or raise? ')[0].lower()
-    if action not in ['f', 'r']:
-        print("I don't understand.")
+    if action not in ['f', 'r', 'q']:
+        print("I don't understand. (q to quit)")
         fold_or_raise()
     return action
 

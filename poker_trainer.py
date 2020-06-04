@@ -44,7 +44,9 @@ def main():
         seat = random.choice(seats)
         optimal_action = get_answer(hand, seat)
         action = deal(hand, seat)
-        if action == optimal_action:
+        if action == 'q':
+            exit()
+        elif action == optimal_action:
             points += 1
             print(f'Points: {points}')
         else:
