@@ -29,11 +29,8 @@ class Deck:
         for suit in ["\u2665", "\u2666", "\u2660", "\u2663"]:
             for i in range(2,10):
                 self.cards.append(Card(suit, i))
-            self.cards.append(Card(suit, 'T'))
-            self.cards.append(Card(suit, 'J'))
-            self.cards.append(Card(suit, 'Q'))
-            self.cards.append(Card(suit, 'K'))
-            self.cards.append(Card(suit, 'A'))
+            for i in ['T', 'J', 'Q', 'K', 'A']:
+                self.cards.append(Card(suit, i))
 
     def show(self):
         for card in self.cards:
@@ -60,3 +57,20 @@ class Player:
     def showHand(self):
         for card in self.hand:
             card.show()
+
+class Game:
+    def __init__(self, playerlist):
+        """
+        playerlist - list of player names
+        """
+        self.deck = Deck()
+        self.deck.shuffle()
+        self.nplayers = len(playerlist)
+        self.playerlist = playerlist
+        self.players = [Player(i) for i in self.playerlist]
+
+    def start(self):
+        for i in range(2):
+            for i in self.players:
+                i.draw(self.deck)
+
