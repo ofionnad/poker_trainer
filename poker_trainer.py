@@ -11,7 +11,7 @@ import numpy as np
 from poker_trainer_functions import fold_or_raise, deal, get_answer, get_high_score, update_high_score
 
 
-def main():
+def play_trainer():
     '''Get better at no limit Texas hold'em.
     '''
     parser = argparse.ArgumentParser()
@@ -61,4 +61,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    play_trainer()
