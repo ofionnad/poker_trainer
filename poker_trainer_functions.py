@@ -4,6 +4,7 @@
 '''
 
 import os
+import pandas as pd
 from colorama import Fore, Style
 
 
@@ -47,6 +48,24 @@ def deal(hand, position='button'):
         cards_with_colour.extend([colour[card[1]], *card, Style.RESET_ALL])
     print("You're dealt\t{}{}{}{}\t{}{}{}{}\t(position: {})".format(*cards_with_colour, position))
     return fold_or_raise()
+
+
+def get_answer(hand, position, hand_rankings_file='poker_trainer.csv'):
+    '''Given a hand, determine whether it is optimal to raise or fold.
+    '''
+    hand_rankings = pd.read_csv(hand_rankings_file)
+    short_hand_1 = hand[0][0] + hand[1][0]
+    short_hand_2 = hand[1][0] + hand[0][0]  # either card can be first
+    if hand[0][1] == hand[1][1]:
+        short_hand_1 += 's'  # suited
+        short_hand_2 += 's'  # suited
+    if (short_hand_1 not in list(hand_rankings['hand']) and
+        short_hand_2 not in list(hand_rankings['hand'])):
+        return 'f'
+    elif short_hand_1 in list(hand_rankings['hand']):
+        return list(hand_rankings[hand_rankings['hand'] == short_hand_1][position])[0]
+    else:  # short_hand_2 in list(hand_rankings['hand'])
+        return list(hand_rankings[hand_rankings['hand'] == short_hand_2][position])[0]
 
 
 def get_high_score(high_score_file):
