@@ -8,12 +8,7 @@ import itertools
 import time
 import random
 import numpy as np
-import pandas as pd
-#import holdem_calc
-#from poker import Range
-#from poker.hand import Combo
-#import holdem_functions
-from poker_trainer_functions import fold_or_raise, deal, get_high_score, update_high_score
+from poker_trainer_functions import fold_or_raise, deal, get_answer, get_high_score, update_high_score
 
 
 def main():
@@ -38,8 +33,6 @@ def main():
     hole_cards = 2
     points = 0
     high_score_file = 'poker_trainer_high_score.txt'
-    hand_rankings_file = 'poker_trainer.csv'
-    hand_rankings = pd.read_csv(hand_rankings_file)
 
     # play the game
     high_score = get_high_score(high_score_file)
@@ -49,8 +42,7 @@ def main():
     while points < points_required:
         hand = random.sample(deck, hole_cards)
         seat = random.choice(seats)
-        # optimal_action = get_answer(hand, seat, hand_rankings)  # TODO actually look up the correct value
-        optimal_action = 'f'  # i.e. fold
+        optimal_action = get_answer(hand, seat)
         action = deal(hand, seat)
         if action == optimal_action:
             points += 1
@@ -68,17 +60,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-# exit if you get ten right in a row
-# save timer to file for best
-
-# check if you should have folded either with a lookup table or monte carlo
-# count outs
-# calculate pot odds
-# pin ranges
-# keep a running score
-#from poker import Range
-#from poker.hand import Combo
-#import holdem_functions
-#odds = holdem_calc.calculate_odds_villan([], True, 1, None ,Combo('KsJc'), None, True, print_elapsed_time=True)
-#print(odds)  # takes inf
